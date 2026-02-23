@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsun Kit Wilson Yaochingco | Front End Developer</title>
-    <meta name="description" content="Portfolio of Tsun Kit Wilson Yaochingco, a Front End Web Developer.">
+    <meta name="description" content="Portfolio of Tsun Kit Wilson Yaochingco, a Front End Web Developer specializing in React, Next.js, and modern UI.">
+    <meta property="og:title" content="Tsun Kit Wilson Yaochingco | Portfolio">
+    <meta property="og:description" content="Front End Web Developer Portfolio featuring projects like Noteica and Checkmate.">
+    <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="fav.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,32 +15,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="noise-overlay"></div>
-
     <header class="header">
         <div class="header__inner">
-            <a href="#prologue" class="logo-link">
+            <a href="#prologue" class="logo-link" aria-label="Home">
                 <img src="logo.png" alt="Wilson Logo" class="header-logo">
             </a>
-            <nav class="nav">
-                <a href="#prologue" class="nav__link">Prologue</a>
-                <a href="#about" class="nav__link">About</a>
-                <a href="#projects" class="nav__link">Projects</a>
-                <a href="#resume" class="nav__link">Resume</a>
-                <a href="#contact" class="nav__link">Contact</a>
-            </nav>
+            <div class="header-right">
+                <nav class="nav" id="mainNav">
+                    <a href="#prologue" class="nav__link">Prologue</a>
+                    <a href="#about" class="nav__link">About</a>
+                    <a href="#projects" class="nav__link">Projects</a>
+                    <a href="#resume" class="nav__link">Resume</a>
+                    <a href="#contact" class="nav__link">Contact</a>
+                </nav>
+                <button class="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme" id="themeToggleBtn">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
         </div>
         <div class="progress-bar-container">
             <div class="progress-bar" id="scrollProgress"></div>
         </div>
     </header>
-
     <main>
-        
         <section id="prologue" class="section prologue">
             <div class="container">
-                
                 <div class="prologue__hero reveal-group">
                     <p class="hero__overline">Tsun Kit Wilson Yaochingco &middot; Front End Developer</p>
                     <h1 class="hero__title">
@@ -46,10 +67,9 @@
                     </h1>
                     <div class="hero__actions">
                         <a href="#projects" class="btn-primary">View Projects</a>
-                        <a href="#resume" class="btn-secondary">View Resume</a>
+                        <a href="#contact" class="btn-secondary">Contact Me</a>
                     </div>
                 </div>
-
                 <div class="prologue__snapshot reveal-group">
                     <div class="snapshot-grid">
                         <div class="snapshot-item">
@@ -68,20 +88,16 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            
             <div class="cinematic-bg"></div>
             <div class="cinematic-overlay"></div>
         </section>
-
         <section id="about" class="section about">
             <div class="container">
                 <div class="section-header reveal-group">
                     <h2 class="section-title">About</h2>
                     <div class="section-line"></div>
                 </div>
-
                 <div class="about__layout reveal-group">
                     <div class="about__text">
                         <h3 class="about__lead">Adding valuable assets to esteemed organizations.</h3>
@@ -94,25 +110,21 @@
                             <li><strong>Collaboration:</strong> Organized, communicative, and ready to contribute to a team.</li>
                         </ul>
                     </div>
-                    
                     <div class="about__visual">
                          <div class="profile-frame">
-                             <img src="profile1.png" alt="Tsun Kit Wilson Yaochingco" class="profile-img">
+                             <img src="profile-light.png" alt="Tsun Kit Wilson Yaochingco" class="profile-img" id="profileImg">
                          </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <section id="projects" class="section projects">
             <div class="container">
                 <div class="section-header reveal-group">
                     <h2 class="section-title">Projects</h2>
                     <div class="section-line"></div>
                 </div>
-
                 <div class="projects-wrapper">
-                    
                     <article class="project-card">
                         <div class="project-content">
                             <div class="project-header-group">
@@ -127,20 +139,19 @@
                                 </div>
                                 <div class="meta-col">
                                     <h5>Stack</h5>
-                                    <p class="tech-list">Next.js, React, Tailwind CSS, Cloudflare Workers</p>
+                                    <p class="tech-list">Next.js, React, Tailwind CSS</p>
                                 </div>
                             </div>
-                            <div style="margin-top: 2rem;">
-                                <a href="https://a1bf6a38.noteica-frontend.pages.dev/" target="_blank" class="btn-primary">View Live Project</a>
+                            <div class="project-actions">
+                                <a href="https://a1bf6a38.noteica-frontend.pages.dev/" target="_blank" class="btn-primary">Live Demo</a>
                             </div>
                         </div>
                         <div class="project-visual">
-                            <a href="https://a1bf6a38.noteica-frontend.pages.dev/" target="_blank" style="display: block; width: 100%; height: 100%;">
-                                <img src="noteica.png" alt="Noteica Interface">
+                            <a href="https://a1bf6a38.noteica-frontend.pages.dev/" target="_blank" class="visual-link">
+                                <img src="noteica.png" alt="Noteica Main Interface" class="main-img">
                             </a>
                         </div>
                     </article>
-
                     <article class="project-card">
                         <div class="project-content">
                             <div class="project-header-group">
@@ -155,20 +166,19 @@
                                 </div>
                                 <div class="meta-col">
                                     <h5>Stack</h5>
-                                    <p class="tech-list">HTML, CSS, JavaScript, TypeScript</p>
+                                    <p class="tech-list">HTML, CSS, TypeScript</p>
                                 </div>
                             </div>
-                            <div style="margin-top: 2rem;">
+                            <div class="project-actions">
                                 <a href="https://checkmate-the-hidden-court.wilsonyao72.workers.dev/" target="_blank" class="btn-primary">Play Game</a>
                             </div>
                         </div>
                         <div class="project-visual">
-                            <a href="https://checkmate-the-hidden-court.wilsonyao72.workers.dev/" target="_blank" style="display: block; width: 100%; height: 100%;">
-                                <img src="checkmate.png" alt="Checkmate Interface">
+                            <a href="https://checkmate-the-hidden-court.wilsonyao72.workers.dev/" target="_blank" class="visual-link">
+                                <img src="checkmate.png" alt="Checkmate Main Interface" class="main-img">
                             </a>
                         </div>
                     </article>
-
                     <article class="project-card">
                         <div class="project-content">
                             <div class="project-header-group">
@@ -183,33 +193,29 @@
                                 </div>
                                 <div class="meta-col">
                                     <h5>Stack</h5>
-                                    <p class="tech-list">Next.js, React, TypeScript, Tailwind CSS, Framer Motion</p>
+                                    <p class="tech-list">Next.js, Tailwind, Framer Motion</p>
                                 </div>
                             </div>
-                            <div style="margin-top: 2rem;">
-                                <a href="https://2ab1992d.mikal-studio.pages.dev/" target="_blank" class="btn-primary">View Live Project</a>
+                            <div class="project-actions">
+                                <a href="https://2ab1992d.mikal-studio.pages.dev/" target="_blank" class="btn-primary">Live Demo</a>
                             </div>
                         </div>
                         <div class="project-visual">
-                            <a href="https://2ab1992d.mikal-studio.pages.dev/" target="_blank" style="display: block; width: 100%; height: 100%;">
-                                <img src="mikal.png" alt="Mikal Studio Interface">
+                            <a href="https://2ab1992d.mikal-studio.pages.dev/" target="_blank" class="visual-link">
+                                <img src="mikal.png" alt="Mikal Studio Interface" class="main-img">
                             </a>
                         </div>
                     </article>
-
                 </div>
             </div>
         </section>
-
         <section id="resume" class="section resume">
             <div class="container">
                 <div class="section-header reveal-group">
                     <h2 class="section-title">Resume</h2>
                     <div class="section-line"></div>
                 </div>
-
                 <div class="resume__layout">
-                    
                     <div class="resume__block reveal-group">
                         <h3 class="resume__category">Education</h3>
                         <div class="resume__item">
@@ -221,7 +227,6 @@
                             <p class="r-desc">Major in Web Development. Recognized as a Dean’s Lister for Academic Year 2025–2026.</p>
                         </div>
                     </div>
-
                     <div class="resume__block reveal-group">
                         <h3 class="resume__category">Certifications</h3>
                         <div class="resume__item">
@@ -232,7 +237,7 @@
                         </div>
                         <div class="resume__item">
                             <div class="r-header">
-                                <h4>Front End Development Libraries</h4>
+                                <h4>Foundational C# with Microsoft</h4>
                                 <span>freeCodeCamp</span>
                             </div>
                         </div>
@@ -249,7 +254,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="resume__block reveal-group">
                         <h3 class="resume__category">Core Skills</h3>
                         <div class="resume__skills">
@@ -259,43 +263,56 @@
                             <span>Responsive Design</span><span>SEO Basics</span>
                         </div>
                     </div>
-
                     <div class="resume__actions reveal-group">
-                        <a href="#" class="btn-primary" download>Download PDF</a>
+                        <a href="Resume.pdf" class="btn-primary" download>Download PDF Resume</a>
                     </div>
                 </div>
             </div>
         </section>
-
         <section id="contact" class="section contact">
             <div class="container">
                 <div class="section-header reveal-group">
                     <h2 class="section-title">Contact</h2>
                     <div class="section-line"></div>
                 </div>
-                
-                <div class="contact__wrapper reveal-group">
-                    <p class="contact__intro">
-                        Lourdes Sur, Angeles City, Pampanga <br>
-                        <span style="color: #555;">0939-135-9841</span>
-                    </p>
-                    <a href="mailto:wilsonyao72@gmail.com" class="contact__email">wilsonyao72@gmail.com</a>
-                    
-                    <div class="contact__socials">
-                        <a href="#">LinkedIn</a>
-                        <span>/</span>
-                        <a href="#">GitHub</a>
+                <div class="contact__grid reveal-group">
+                    <div class="contact__info">
+                        <p class="contact__intro">
+                            Let's build something great. Available for freelance opportunities and full-time roles. <br><br>
+                            Lourdes Sur, Angeles City, Pampanga <br>
+                            <span class="contact-phone">0939-135-9841</span>
+                        </p>
+                        <a href="mailto:wilsonyao72@gmail.com" class="contact__email">wilsonyao72@gmail.com</a>
+                        <div class="contact__socials">
+                            <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                            <span>/</span>
+                            <a href="https://github.com/wilsonyao4" target="_blank">GitHub</a>
+                        </div>
                     </div>
+                    <form class="contact__form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Juan Dela Cruz">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="juandelacruz@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="4" required placeholder="Hello, I'd like to inquire about..."></textarea>
+                        </div>
+                        <input type="hidden" name="_captcha" value="false">
+                        <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                        <div id="formStatus" style="margin-top: var(--space-16); font-size: 0.9rem; font-weight: 500;"></div>
+                    </form>
                 </div>
             </div>
         </section>
-
     </main>
-
     <footer class="footer">
-        <p>&copy; 2026 Tsun Kit Wilson Yaochingco. <span class="text-secondary">Front End Web Developer.</span></p>
+        <p>&copy; 2026 Wilson Yaochingco. All Rights Reserved.</p>
     </footer>
-
     <script src="js/script.js"></script>
 </body>
 </html>
