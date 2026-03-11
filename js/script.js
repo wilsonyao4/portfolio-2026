@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData.entries());
             try {
-                const API_URL = 'https://portfolio-backend-wilson.onrender.com/api/contact';
+                const API_URL = 'https://portfolio-2026-2ta3.onrender.com/api/contact';
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
