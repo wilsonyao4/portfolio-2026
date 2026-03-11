@@ -5,17 +5,14 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
-// Middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Validation Helper Function
 const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
-// Create the email transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -24,7 +21,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Verify connection configuration on startup
 transporter.verify((error, success) => {
     if (error) {
         console.error("❌ Gmail Connection Error:", error);
@@ -33,24 +29,21 @@ transporter.verify((error, success) => {
     }
 });
 
-// POST Route: Handle Form Submissions
 app.post('/api/contact', async (req, res) => {
     try {
         const { name, email, message } = req.body;
 
-        // 1. Input Validation
         if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required.' });
         if (!email || !email.trim()) return res.status(400).json({ error: 'Email is required.' });
         if (!message || !message.trim()) return res.status(400).json({ error: 'Message is required.' });
         if (!isValidEmail(email)) return res.status(400).json({ error: 'Invalid email address.' });
 
-        // 2. Email Configuration & Professional Template
         const mailOptions = {
             from: `"${name}" <${process.env.EMAIL_USER}>`, 
             replyTo: email, 
             to: process.env.EMAIL_USER, 
             subject: `New Portfolio Message from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, // Fallback for plain text clients
+            text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, 
             html: `
                 <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                     
@@ -90,10 +83,8 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
-        // 3. Send Email
         await transporter.sendMail(mailOptions);
         
-        // 4. Send Success Response
         return res.status(200).json({ success: 'Message sent successfully!' });
 
     } catch (error) {
@@ -102,7 +93,6 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`✅ Backend server is actively running on port ${PORT}`);
