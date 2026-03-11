@@ -1,11 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
-
 const app = express();
 
-app.use(cors());
+app.use(cors()); 
 app.use(express.json());
 
 const isValidEmail = (email) => {
