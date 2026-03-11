@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', currentTheme);
     const profileImg = document.getElementById('profileImg');
-    if (profileImg) {
-        profileImg.src = currentTheme === 'light' ? 'profile-light.png' : 'profile1.png';
-    }
+    const headerLogo = document.getElementById('headerLogo');
+    if (profileImg) profileImg.src = currentTheme === 'light' ? 'profile-light.png' : 'profile1.png';
+    if (headerLogo) headerLogo.src = currentTheme === 'light' ? 'logo.png' : 'dark_logo.png';
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
@@ -12,16 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
-                if (profileImg) {
-                    profileImg.src = newTheme === 'light' ? 'profile-light.png' : 'profile1.png';
-                }
+                if (profileImg) profileImg.src = newTheme === 'light' ? 'profile-light.png' : 'profile1.png';
+                if (headerLogo) headerLogo.src = newTheme === 'light' ? 'logo.png' : 'dark_logo.png';
             };
             if (!document.startViewTransition) {
                 toggleTheme();
             } else {
-                document.startViewTransition(() => {
-                    toggleTheme();
-                });
+                document.startViewTransition(() => toggleTheme());
             }
         });
     }
@@ -36,31 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            if (pageYOffset >= (sectionTop - window.innerHeight / 3)) {
-                current = section.getAttribute('id');
-            }
+            if (pageYOffset >= (sectionTop - window.innerHeight / 3)) current = section.getAttribute('id');
         });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
+            if (link.getAttribute('href').includes(current)) link.classList.add('active');
         });
     });
     const animatedElements = document.querySelectorAll('.reveal-group, .project-card');
     if (animatedElements.length > 0) {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px 0px -10% 0px', 
-            threshold: 0.1 
-        };
+        const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
         const resetObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                } else {
-                    entry.target.classList.remove('in-view');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('in-view');
+                else entry.target.classList.remove('in-view');
             });
         }, observerOptions);
         animatedElements.forEach(el => resetObserver.observe(el));
@@ -90,24 +76,30 @@ document.addEventListener('DOMContentLoaded', () => {
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
+            formStatus.textContent = '';
             const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData.entries());
             try {
-                const response = await fetch('https://formsubmit.co/ajax/wilsonyao72@gmail.com', {
+                const API_URL = 'https://portfolio-backend-xyz.onrender.com/api/contact';
+                const response = await fetch(API_URL, {
                     method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
                 });
+                const result = await response.json();
                 if (response.ok) {
                     formStatus.textContent = 'Message sent successfully!';
                     formStatus.style.color = 'var(--accent-crimson)';
                     contactForm.reset();
                 } else {
-                    throw new Error('Failed to send');
+                    throw new Error(result.error || 'Failed to send message.');
                 }
             } catch (error) {
-                formStatus.textContent = 'Oops! Something went wrong. Please try again.';
+                if (error.message.includes('Failed to fetch')) {
+                    formStatus.textContent = 'Network error: Cannot reach the server.';
+                } else {
+                    formStatus.textContent = error.message;
+                }
                 formStatus.style.color = 'red';
             } finally {
                 submitBtn.disabled = false;
