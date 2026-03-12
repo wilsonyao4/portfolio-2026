@@ -401,3 +401,26 @@ ul { list-style: none; }
     .project-actions .btn-primary, .project-actions .btn-secondary { width: 100%; text-align: center; }
     .profile-frame { width: 240px; height: 240px; }
 }
+
+body {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+#preloader, .preloader, .loader, #loader {
+    display: none !important;
+}
+
+.dark-profile {
+    display: none;
+}
+.light-profile {
+    display: block;
+}
+
+[data-theme="dark"] .light-profile {
+    display: none;
+}
+[data-theme="dark"] .dark-profile {
+    display: block;
+}
