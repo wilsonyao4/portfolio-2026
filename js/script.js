@@ -124,14 +124,12 @@ updateActiveNav();
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contactForm');
-    if (!form) {
-        console.warn('Contact form not found on this page. Skipping form logic.');
-        return;
-    }
+    if (!form) return;
 
     const btn = form.querySelector('button[type="submit"]');
     const formStatus = document.getElementById('formStatus');
-    const API_URL = 'https://portfolio-2026-2ta3.onrender.com/api/contact';
+    
+    const WEB3FORMS_KEY = "2cba69cb-24ac-4dae-bea1-de87726524d0";
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -141,65 +139,45 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = document.getElementById('message').value.trim();
 
         if (!name || !email || !message) {
-            if (formStatus) {
-                formStatus.textContent = 'Please fill in all fields.';
-                formStatus.style.color = 'var(--accent-crimson)';
-            } else {
-                alert('Please fill in all fields.');
-            }
+            formStatus.textContent = 'Please fill in all fields.';
+            formStatus.style.color = '#EF4444';
             return;
         }
 
         const originalText = btn ? btn.innerText : 'Send Message';
-        if (btn) {
-            btn.innerText = 'Sending...';
-            btn.disabled = true;
-        }
-
-        if (formStatus) {
-            formStatus.textContent = '';
-        }
+        btn.innerText = 'Sending...';
+        btn.disabled = true;
+        formStatus.textContent = '';
 
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, message })
+                body: JSON.stringify({
+                    access_key: WEB3FORMS_KEY,
+                    name: name,
+                    email: email,
+                    message: message,
+                    subject: `New Portfolio Message from ${name}`
+                })
             });
 
-            if (response.ok) {
-                const result = await response.json();
-                if (formStatus) {
-                    formStatus.textContent = result.message || 'Message sent successfully!';
-                    formStatus.style.color = 'var(--accent-crimson)';
-                } else {
-                    alert(result.message || 'Message sent successfully!');
-                }
+            const result = await response.json();
+
+            if (response.status === 200) {
+                formStatus.textContent = '✅ Message sent successfully!';
+                formStatus.style.color = '#10B981';
                 form.reset();
             } else {
-                const errorData = await response.json().catch(() => ({ error: 'Failed to send message.' }));
-                const errorText = errorData.error || 'Error: Failed to send message.';
-                if (formStatus) {
-                    formStatus.textContent = errorText;
-                    formStatus.style.color = 'var(--accent-crimson)';
-                } else {
-                    alert(errorText);
-                }
+                formStatus.textContent = result.message || '❌ Failed to send.';
+                formStatus.style.color = '#EF4444';
             }
         } catch (error) {
-            console.error('Contact form error:', error);
-            const errorText = 'Network error: Could not reach the server.';
-            if (formStatus) {
-                formStatus.textContent = errorText;
-                formStatus.style.color = 'var(--accent-crimson)';
-            } else {
-                alert(errorText);
-            }
+            formStatus.textContent = '❌ Network error. Please try again.';
+            formStatus.style.color = '#EF4444';
         } finally {
-            if (btn) {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
     });
 });
